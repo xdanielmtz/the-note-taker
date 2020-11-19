@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 8080;
 // 5. Add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("public"));
 
 // VIEW ROUTES
 app.get("/", (req, res) => {
@@ -21,12 +22,9 @@ app.get("/notes", (req, res) => {
 });
 
 
-// app.get("/api/notes", (req, res) => {
-//   fs.readFile("Develop/db/db.json", "utf-8", (err, data) => {
-//     if (err) throw err;
-//     return res.json(notes)
-//   })
-// });
+app.get("/api/notes", (req, res) => {
+  return res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "../../../../develop/db/db.json"))));
+});
 
 // app.get("/api/donuts/:name", (req, res) => {
 //   for (let i = 0; i < donuts.length; i++) {
