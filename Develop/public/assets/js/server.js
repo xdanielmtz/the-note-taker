@@ -1,4 +1,5 @@
 // 1. Require Express
+const fs = require("fs");
 const express = require("express");
 const path = require("path");
 // 2. Create an instance of Express
@@ -19,34 +20,12 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname,"../../notes.html"));
 });
 
-// // API ROUTES
-// app.get("/api/config", (req, res) => {
-//   res.json({
-//     success: true,
-//   });
-// });
 
-// const donuts = [
-//   {
-//     name: "glazed",
-//     price: "$0.99",
-//   },
-//   {
-//     name: "Cereal Killer",
-//     price: "$3.99",
-//   },
-//   {
-//     name: "Lemon Filled",
-//     price: "$1.99",
-//   },
-//   {
-//     name: "Bear Claw",
-//     price: "$4.99",
-//   },
-// ];
-
-// app.get("/api/donuts", (req, res) => {
-//   res.json(donuts);
+// app.get("/api/notes", (req, res) => {
+//   fs.readFile("Develop/db/db.json", "utf-8", (err, data) => {
+//     if (err) throw err;
+//     return res.json(notes)
+//   })
 // });
 
 // app.get("/api/donuts/:name", (req, res) => {
@@ -57,10 +36,7 @@ app.get("/notes", (req, res) => {
 //   }
 // });
 
-// app.post("/api/donuts", (req, res) => {
-//   donuts.push(req.body);
-//   res.json(donuts);
-// });
+
 
 // 4. Listen on the PORT.
 app.listen(PORT, () => {
