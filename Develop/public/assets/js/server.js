@@ -26,6 +26,7 @@ app.get("/api/notes", (req, res) => {
   return res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "../../../../develop/db/db.json"))));
 });
 
+
 // app.get("/api/donuts/:name", (req, res) => {
 //   for (let i = 0; i < donuts.length; i++) {
 //     if (donuts[i].name === req.params.name) {
