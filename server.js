@@ -1,14 +1,19 @@
-// 1. Require Express
+// Require Express
 const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const db = require("./db/db.json")
-// 2. Create an instance of Express
+
+// Create an instance of Express
 const app = express();
-// 3. Set the PORT
+
+// Set the PORT
 const PORT = process.env.PORT || 8080;
+
+// having an array equal to the db
 const notes = db
-// 5. Add middleware
+
+// Add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -22,13 +27,16 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname,"./public/notes.html"));
 });
 
-
+// returns the db.json file. parses it to make it into json format and display to user 
 app.get("/api/notes", (req, res) => {
   return res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "./db/db.json"))));
 });
 
+
+// Post route
 app.post("/api/notes", (req, res) => {
   console.log(req.body)
+  // gives each object a id and increments 
   req.body["id"] = notes.length+1
   notes.push(req.body)
   fs.writeFile("./db/db.json", JSON.stringify(notes), "utf-8", (err) => {
@@ -37,6 +45,8 @@ app.post("/api/notes", (req, res) => {
   })
 })
 
+
+// Delete route. 
 app.delete("/api/notes/:id", (req, res) => {
   let deletedItem = req.params.id
   fs.readFile("./db/db.json", (err, data) => {
@@ -54,18 +64,6 @@ app.delete("/api/notes/:id", (req, res) => {
   })
   res.end()
 })
-
-
-
-// app.get("/api/donuts/:name", (req, res) => {
-//   for (let i = 0; i < donuts.length; i++) {
-//     if (donuts[i].name === req.params.name) {
-//       return res.json(donuts[i]);
-//     }
-//   }
-// });
-
-
 
 // 4. Listen on the PORT.
 app.listen(PORT, () => {
